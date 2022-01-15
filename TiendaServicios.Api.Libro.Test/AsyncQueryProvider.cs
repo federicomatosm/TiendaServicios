@@ -27,7 +27,7 @@ namespace TiendaServicios.Api.Libro.Test
 
         public object Execute(Expression expression)
         {
-            return _inner.Execute(expression);
+            return _inner?.Execute(expression);
         }
 
         public TResult Execute<TResult>(Expression expression)
