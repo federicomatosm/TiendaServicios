@@ -33,7 +33,7 @@ namespace TiendaServicios.API.Libro
         {
             services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
-            services.AddDbContext<ContextoLibreria>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ContextoLibreria>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMediatR(typeof(Nuevo.Manejador).Assembly);
             services.AddAutoMapper(typeof(Consulta.Manejador));
@@ -48,7 +48,7 @@ namespace TiendaServicios.API.Libro
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseRouting();
 
