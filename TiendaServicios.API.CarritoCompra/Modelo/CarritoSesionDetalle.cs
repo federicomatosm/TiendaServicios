@@ -6,7 +6,7 @@ namespace TiendaServicios.API.CarritoCompra.Modelo
        
 
         public int CarritoSesionDetalleId { get; set; }
-        public DateTime? FechaCreacion { get; set; }
+        public DateTimeOffset? FechaCreacion { get; set; }
         public string ProductoSeleccionado { get; set; }
 
         public int CarritoSesionId { get; set; }

@@ -12,7 +12,7 @@ namespace TiendaServicios.API.CarritoCompra.Aplicacion
     {
        public class Ejecuta : IRequest
         {
-            public DateTime FechaCreacionSesion { get; set; }
+            public DateTimeOffset FechaCreacionSesion { get; set; }
             public List<string> ProductoLista { get; set; }
 
         }
