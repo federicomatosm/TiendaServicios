@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>72e91268-88b2-47a0-9479-f8be9624e34d</UserSecretsId>
   </PropertyGroup>
 
 
@@ -17,8 +19,8 @@
     </PackageReference>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modelo\" />
@@ -27,5 +29,9 @@
     <Folder Include="ModelosRemotos\" />
     <Folder Include="InterfacesRemota\" />
     <Folder Include="ServiciosRemoto\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="MySql.EntityFrameworkCore" />
+    <None Remove="Pomelo.EntityFrameworkCore.MySql" />
   </ItemGroup>
 </Project>

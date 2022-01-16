@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaServicios.API.CarritoCompra.Persistencia;
 
@@ -10,9 +11,10 @@ using TiendaServicios.API.CarritoCompra.Persistencia;
 namespace TiendaServicios.API.CarritoCompra.Migrations
 {
     [DbContext(typeof(ContextoCarrito))]
-    partial class ContextoCarritoModelSnapshot : ModelSnapshot
+    [Migration("20220115163923_ChangeDatesAndProvider")]
+    partial class ChangeDatesAndProvider
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
