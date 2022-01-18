@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+   <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Ocelot" Version="17.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Ocelot" />
+    <None Remove="MessageHandler\" />
+    <None Remove="LibroRemote\" />
+    <None Remove="RemoteInterface\" />
+    <None Remove="ImplementRemote\" />
+    <None Remove="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MessageHandler\" />
+    <Folder Include="RemoteModel\" />
+    <Folder Include="RemoteInterface\" />
+    <Folder Include="ImplementRemote\" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+</Project>

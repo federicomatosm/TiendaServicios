@@ -18,8 +18,15 @@ services:
       context: .
       dockerfile: TiendaServicios.API.CarritoCompra/Dockerfile
 
+  tiendaservicios.api.gateway:
+    image: ${DOCKER_REGISTRY-}tiendaserviciosapi
+    build:
+      context: .
+      dockerfile: TiendaServicios.Api.Gateway/Dockerfile
+
 networks:
   default:
     external:
       name: dev-networkfm
+
 
