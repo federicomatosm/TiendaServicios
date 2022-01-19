@@ -9,8 +9,10 @@ using MediatR;
 using TiendaServicios.Api.Autor.Aplicacion;
 using FluentValidation.AspNetCore;
 using AutoMapper;
-
-
+using TiendaServicios.RabbitMQ.Bus.EventoQueue;
+using TiendaServicios.RabbitMQ.Bus.BusRabbit;
+using TiendaServicios.Api.Autor.ManejadorRabbit;
+using TiendaServicios.RabbitMQ.Bus.Implement;
 
 namespace TiendaServicios.Api.Autor
 {
@@ -26,6 +28,13 @@ namespace TiendaServicios.Api.Autor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IRabbitEventBus, RabbitEventBus>(sp =>
+            {
+                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+
+                return new RabbitEventBus(sp.GetService<IMediator>(), scopeFactory);
+            });
+            services.AddTransient<EmailEventoManejador>();
             services.AddControllers().AddFluentValidation(cfb => cfb.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
             services.AddDbContext<ContextoAutor>(options =>
@@ -37,6 +46,9 @@ namespace TiendaServicios.Api.Autor
          //   services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             services.AddMediatR(typeof(Nuevo.Manejador).Assembly);
             services.AddAutoMapper(typeof(Consulta.Manejador));
+            
+            services.AddTransient<IEventoManejador<EmailEventoQueue>, EmailEventoManejador>();
+            
 
 
         }
@@ -60,6 +72,9 @@ namespace TiendaServicios.Api.Autor
             {
                 endpoints.MapControllers();
             });
+
+            var eventBus = app.ApplicationServices.GetRequiredService<IRabbitEventBus>();
+            eventBus.Suscribe<EmailEventoQueue, EmailEventoManejador>();
         }
     }
 }

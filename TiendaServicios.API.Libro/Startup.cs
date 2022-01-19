@@ -16,6 +16,8 @@ using TiendaServicios.API.Libro.Aplicacion;
 using MediatR;
 using FluentValidation.AspNetCore;
 using AutoMapper;
+using TiendaServicios.RabbitMQ.Bus.Implement;
+using TiendaServicios.RabbitMQ.Bus.BusRabbit;
 
 namespace TiendaServicios.API.Libro
 {
@@ -31,13 +33,19 @@ namespace TiendaServicios.API.Libro
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IRabbitEventBus, RabbitEventBus>(sp =>
+            {
+                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+
+                return new RabbitEventBus(sp.GetService<IMediator>(), scopeFactory);
+            });
             services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
             services.AddDbContext<ContextoLibreria>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMediatR(typeof(Nuevo.Manejador).Assembly);
             services.AddAutoMapper(typeof(Consulta.Manejador));
-            
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
