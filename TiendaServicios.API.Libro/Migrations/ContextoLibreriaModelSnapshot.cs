@@ -2,8 +2,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaServicios.API.Libro.Persistencia;
+
+#nullable disable
 
 namespace TiendaServicios.API.Libro.Migrations
 {
@@ -14,22 +17,25 @@ namespace TiendaServicios.API.Libro.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8");
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("TiendaServicios.API.Libro.Modelo.LibroMaterial", b =>
                 {
                     b.Property<Guid?>("LibreriaMaterialId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("AutorLibro")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("FechaPublicacion")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTimeOffset?>("FechaPublicacion")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Titulo")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LibreriaMaterialId");
 

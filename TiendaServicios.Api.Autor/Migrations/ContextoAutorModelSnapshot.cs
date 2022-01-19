@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TiendaServicios.Api.Autor.Persistencia;
 
+#nullable disable
+
 namespace TiendaServicios.Api.Autor.Migrations
 {
     [DbContext(typeof(ContextoAutor))]
@@ -15,16 +17,18 @@ namespace TiendaServicios.Api.Autor.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("TiendaServicios.Api.Autor.Modelo.AutorLibro", b =>
                 {
                     b.Property<int>("AutorLibroId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AutorLibroId"));
 
                     b.Property<string>("Apellido")
                         .HasColumnType("text");
@@ -32,8 +36,8 @@ namespace TiendaServicios.Api.Autor.Migrations
                     b.Property<string>("AutorLibroGuid")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("FechaNacimiento")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTimeOffset?>("FechaNacimiento")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("GradoAcademicoGuid")
                         .HasColumnType("text");
@@ -50,8 +54,9 @@ namespace TiendaServicios.Api.Autor.Migrations
                 {
                     b.Property<int>("GradoAcademicoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GradoAcademicoId"));
 
                     b.Property<int>("AutorLibroId")
                         .HasColumnType("integer");
@@ -59,8 +64,8 @@ namespace TiendaServicios.Api.Autor.Migrations
                     b.Property<string>("CentroAcademico")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("FechaGrado")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTimeOffset?>("FechaGrado")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("text");
@@ -79,6 +84,13 @@ namespace TiendaServicios.Api.Autor.Migrations
                         .HasForeignKey("AutorLibroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Autor");
+                });
+
+            modelBuilder.Entity("TiendaServicios.Api.Autor.Modelo.AutorLibro", b =>
+                {
+                    b.Navigation("ListaGradoAcademico");
                 });
 #pragma warning restore 612, 618
         }

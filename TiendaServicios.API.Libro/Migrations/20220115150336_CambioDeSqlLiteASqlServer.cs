@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace TiendaServicios.API.Libro.Migrations
 {
-    public partial class Initial : Migration
+    public partial class CambioDeSqlLiteASqlServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,10 +13,10 @@ namespace TiendaServicios.API.Libro.Migrations
                 name: "LibroMaterial",
                 columns: table => new
                 {
-                    LibreriaMaterialId = table.Column<Guid>(nullable: false),
-                    Titulo = table.Column<string>(nullable: true),
-                    FechaPublicacion = table.Column<DateTime>(nullable: true),
-                    AutorLibro = table.Column<Guid>(nullable: true)
+                    LibreriaMaterialId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaPublicacion = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    AutorLibro = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {

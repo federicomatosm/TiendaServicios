@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaServicios.API.CarritoCompra.Persistencia;
 
+#nullable disable
+
 namespace TiendaServicios.API.CarritoCompra.Migrations
 {
     [DbContext(typeof(ContextoCarrito))]
@@ -14,7 +16,7 @@ namespace TiendaServicios.API.CarritoCompra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("TiendaServicios.API.CarritoCompra.Modelo.CarritoSesion", b =>
@@ -23,8 +25,8 @@ namespace TiendaServicios.API.CarritoCompra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime");
+                    b.Property<DateTimeOffset?>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("CarritoSesionId");
 
@@ -40,11 +42,11 @@ namespace TiendaServicios.API.CarritoCompra.Migrations
                     b.Property<int>("CarritoSesionId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime");
+                    b.Property<DateTimeOffset?>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("ProductoSeleccionado")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("CarritoSesionDetalleId");
 
@@ -60,6 +62,13 @@ namespace TiendaServicios.API.CarritoCompra.Migrations
                         .HasForeignKey("CarritoSesionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("carritoSesion");
+                });
+
+            modelBuilder.Entity("TiendaServicios.API.CarritoCompra.Modelo.CarritoSesion", b =>
+                {
+                    b.Navigation("ListaDetalle");
                 });
 #pragma warning restore 612, 618
         }

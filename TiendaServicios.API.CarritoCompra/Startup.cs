@@ -17,6 +17,7 @@ using TiendaServicios.API.CarritoCompra.InterfacesRemota;
 using TiendaServicios.API.CarritoCompra.Persistencia;
 using TiendaServicios.API.CarritoCompra.ServiciosRemoto;
 
+
 namespace TiendaServicios.API.CarritoCompra
 {
     public class Startup
@@ -34,7 +35,8 @@ namespace TiendaServicios.API.CarritoCompra
             services.AddScoped<IServicioLibro, ServicioLibro>();
             services.AddControllers();
             services.AddDbContext<ContextoCarrito>(options => {
-                options.UseMySQL(Configuration.GetConnectionString("conexiondb"));
+                var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
+                object p = options.UseMySql(Configuration.GetConnectionString("conexiondb"), serverVersion);
             });
 
             services.AddMediatR(typeof(Nuevo.Ejecuta).Assembly);
@@ -52,7 +54,7 @@ namespace TiendaServicios.API.CarritoCompra
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseRouting();
 

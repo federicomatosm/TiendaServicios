@@ -10,7 +10,7 @@ namespace TiendaServicios.API.CarritoCompra.Modelo
         }
 
         public int CarritoSesionId { get; set; }
-        public DateTime? FechaCreacion { get; set; }
+        public DateTimeOffset? FechaCreacion { get; set; }
 
         public ICollection<CarritoSesionDetalle> ListaDetalle { get; set; }
     }
