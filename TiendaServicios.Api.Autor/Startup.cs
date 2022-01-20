@@ -13,6 +13,8 @@ using TiendaServicios.RabbitMQ.Bus.EventoQueue;
 using TiendaServicios.RabbitMQ.Bus.BusRabbit;
 using TiendaServicios.Api.Autor.ManejadorRabbit;
 using TiendaServicios.RabbitMQ.Bus.Implement;
+using TiendaServicios.Mensajeria.Email.Implement;
+using TiendaServicios.Mensajeria.Email.Interface;
 
 namespace TiendaServicios.Api.Autor
 {
@@ -34,6 +36,8 @@ namespace TiendaServicios.Api.Autor
 
                 return new RabbitEventBus(sp.GetService<IMediator>(), scopeFactory);
             });
+
+            services.AddSingleton<ISendGridEnviar, SendGridEnviar>();
             services.AddTransient<EmailEventoManejador>();
             services.AddControllers().AddFluentValidation(cfb => cfb.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
@@ -73,7 +77,7 @@ namespace TiendaServicios.Api.Autor
                 endpoints.MapControllers();
             });
 
-            var eventBus = app.ApplicationServices.GetRequiredService<IRabbitEventBus>();
+            var eventBus = app.ApplicationServices.GetRequiredService<RabbitMQ.Bus.BusRabbit.IRabbitEventBus>();
             eventBus.Suscribe<EmailEventoQueue, EmailEventoManejador>();
         }
     }
